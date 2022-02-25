@@ -1,0 +1,33 @@
+{%extends "reservation/base.html" %}
+{%load static%}
+
+
+{%block page_content%}
+<div class="row"><div class="col-xs-4">
+     <div class="card mb-2">
+            <img class="card-img-top" src="{% static department.picture %}">
+            <div class="card-body">
+                <h5 class="card-title">{{ department.name }}</h5>
+                <p class="card-text">{{ department.desc}}</p>
+               
+            </div></div>
+            
+</div>
+<div class='row'>
+{% for doctor in department.doctor_set.all %}
+<div class="col-xs-4">
+        <div class="card mb-2">
+            <img class="card-img-top" src="{% static doctor.picture %}">
+            <div class="card-body">
+                <h5 class="card-title">{{ doctor.name }}</h5>
+                <p class="card-text">{{ doctor.speciality}}</p>
+                <a href=" /reservation/doctor/{{doctor.pk}}"
+                   class="btn btn-primary">
+                    Reserve
+                </a>
+            </div>
+        </div>
+    </div>
+{%endfor %}
+</div>
+{% endblock%}

@@ -1,0 +1,114 @@
+{%extends "reservation/base.html" %}
+
+{%load static%}
+{%block page_content%}
+<div class="row">
+
+<div class="card mb-2">
+            <img class="card-img-top" src="{% static doctor.picture %}">
+            <div class="card-body">
+                <h5 class="card-title">{{ doctor.doctor_name }}</h5>
+                <p class="card-text">{{ doctor.speciality}}</p>
+               
+            </div>
+</div></div>
+<div class="row">
+
+{%if not doctor.schedule_set.all %}
+			<p>The doctor is available today from {{doctor.available_from}} to {{doctor.available_to}}</p>
+{% else%}
+<table class="table table-hover">
+
+ <caption>Schedule</caption>
+
+ <thead>
+
+ <tr>
+
+ <th>Patient No</th>
+
+ <th>time</th>
+
+ <th>state</th>
+
+ </tr>
+
+ </thead>
+
+ <tbody>
+
+ {% for s in doctor.schedule_set.all%}
+
+ <tr>
+ <td>{{s.id}}</td>
+
+ <td>{{s.date}}</td>
+
+ <td>{{s.reserved}}</td>
+
+ </tr>
+
+  {% endfor%}
+<time></time>
+ </tbody>
+
+</table>
+</div>
+
+
+{% endif%}
+</div>
+<div class="row">
+
+<form action="/reservation/doctor/{{doctor.pk}}/" method="post" background='green'>
+
+        {% csrf_token %}
+       
+        <div class="form-group">
+         <label>Patient's Name:</label>
+            {{ form1.patient_name }}
+        </div>
+      
+        <div class="form-group">
+          <label>Patient's phone:</label>
+            {{ form1.phone }}
+        </div>
+        <label>date:</label>{{form1.date}}
+    {{form1.time}}
+
+
+
+        
+        <button type="submit" class="btn btn-primary" >
+        إحجز موعد
+         </button>
+    </form>
+</div>
+<div class="row" >
+
+<form action=" /reservation/doctor/{{doctor.pk}}/"method="post" 
+>
+        {% csrf_token %}
+        <label>Your name:</label>
+        <div class="form-group">
+            {{ form.commenter }}
+        </div>
+        <label>your comment:</label>
+        <div class="form-group">
+            {{ form.comment }}
+        </div>
+        
+        <button type="submit" class="btn btn-primary" >
+  send
+         </button>
+    </form>
+</div>
+
+
+{%for review in doctor.review_set.all %}
+<div class="row">
+<h2>{{review.commenter}}</h2>
+<p>{{review.comment}}</p>
+</div>
+{%endfor %}
+{%endblock %}

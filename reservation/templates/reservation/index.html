@@ -1,0 +1,21 @@
+{%extends "reservation/base.html" %}
+
+{%load static%}
+{%block page_content%}
+<div class="row">
+{% for department in departments %}
+    <div class="col-xs-3">
+        <div class="card mb-2"><a href=" /reservation/{{department.pk}}/">
+            <img class="card-img-top" src="{% static department.picture %}"></a>
+            <div class="card-body">
+                <h5 class="card-title">{{ department.name }}</h5>
+                <p class="card-text">{{ department.desc}}</p>
+                
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div></div>
+</div>
+  </body></html>
+  {%endblock%}
